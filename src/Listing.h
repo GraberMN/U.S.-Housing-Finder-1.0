@@ -21,6 +21,9 @@ public:
     int beds;
     double baths;
     string state;
+
+    Listing(string& _id, string& _url, int _monthlyRent, string& _type, int _sqfeet, int _beds, double _baths, string& _state);
+    void print();
 };
 
 
