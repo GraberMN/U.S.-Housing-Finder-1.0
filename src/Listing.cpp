@@ -4,6 +4,19 @@
 
 #include "Listing.h"
 
+// Listing default constructor
+Listing::Listing()
+{
+    id = "";
+    url = "";
+    monthlyRent = 0;
+    type = "";
+    sqfeet = 0;
+    beds = 0;
+    baths = 0.0;
+    state = "";
+}
+
 // Listing constructor
 Listing::Listing(string& _id, string& _url, int _monthlyRent, string& _type, int _sqfeet, int _beds, double _baths, string& _state)
 {
