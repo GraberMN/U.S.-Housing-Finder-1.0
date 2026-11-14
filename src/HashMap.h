@@ -1,0 +1,40 @@
+//
+// Created by grabe on 11/12/2026.
+//
+
+#ifndef U_S__HOUSING_FINDER_1_0_HASHMAP_H
+#define U_S__HOUSING_FINDER_1_0_HASHMAP_H
+
+#include "Listing.h"
+#include <utility>
+#include <chrono>
+
+class HashMap
+{
+private:
+    pair<string, Listing>* hashTable;
+    int numEntries;
+    int numBuckets;
+    double loadFactor;
+    const double maxLoadFactor = 0.8;
+
+    long long hashFunc(string& id);
+    int reduce(long long hashCode);
+    void resize();
+    void linearProbing(Listing& listing);
+public:
+    HashMap();
+    ~HashMap();
+    void insert(Listing& listing);
+    void readInData();
+    void searchByMonthlyRent(int monthlyRent);
+    void searchByType(string& type);
+    void searchBySqFeet(int sqfeet);
+    void searchByNumBeds(int beds);
+    void searchByNumBaths(double baths);
+    void searchByState(string& state);
+    void printAll();
+};
+
+
+#endif //U_S__HOUSING_FINDER_1_0_HASHMAP_H
