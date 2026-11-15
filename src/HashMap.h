@@ -9,6 +9,8 @@
 #include <utility>
 #include <chrono>
 
+// Each key value pair in the HashMap consists of a unique key (listing ID) and a value (Listing object).
+// The HashMap has an initial bucket count of 5, has a max load factor of 0.8, and uses linear probing for collisions.
 class HashMap
 {
 private:
