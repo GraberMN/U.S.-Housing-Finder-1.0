@@ -23,7 +23,7 @@ private:
     long long hashFunc(string& id);
     int reduce(long long hashCode);
     void resize();
-    void linearProbing(Listing& listing);
+    int linearProbing(int index);
 public:
     HashMap();
     ~HashMap();
