@@ -32,7 +32,7 @@ public:
     ~HashMap();
     void insert(Listing& listing);
     void readInData();
-    void searchByMonthlyRent(int monthlyRent);
+    void searchByMonthlyRent(int monthlyRentLower, int monthlyRentUpper);
     void searchByType(string& type);
     void searchBySqFeet(int sqfeet);
     void searchByNumBeds(int beds);
