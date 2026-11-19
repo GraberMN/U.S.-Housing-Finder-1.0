@@ -34,7 +34,7 @@ public:
     void readInData();
     void searchByMonthlyRent(int monthlyRentLower, int monthlyRentUpper);
     void searchByType(string& type);
-    void searchBySqFeet(int sqfeet);
+    void searchBySqFeet(int sqfeetLower, int sqfeetUpper);
     void searchByNumBeds(int beds);
     void searchByNumBaths(double baths);
     void searchByState(string& state);

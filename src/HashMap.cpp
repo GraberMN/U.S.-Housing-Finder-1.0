@@ -219,3 +219,32 @@ void HashMap::searchByType(string& type)
     cout << "This operation took " << duration.count() << " milliseconds." << endl;
     cout << endl;
 }
+
+// Finds and prints out only the Listings within a given sq. feet range (inclusive)
+void HashMap::searchBySqFeet(int sqfeetLower, int sqfeetUpper)
+{
+    auto time1 = chrono::high_resolution_clock::now();
+
+    cout << "Listings between " << sqfeetLower << " and " << sqfeetUpper << " sqfeet (inclusive):" << endl;
+    cout << endl;
+    int numFound = 0;
+    for (int i = 0; i < numBuckets; i++)
+    {
+        if (hashTable[i].first == "")
+            continue;
+        if (hashTable[i].second.sqfeet >= sqfeetLower && hashTable[i].second.sqfeet <= sqfeetUpper)
+        {
+            hashTable[i].second.print();
+            numFound++;
+        }
+    }
+    if (numFound == 1)
+        cout << numFound << " listing found." << endl;
+    else
+        cout << numFound << " listings found." << endl;
+
+    auto time2 = chrono::high_resolution_clock::now();
+    auto duration = chrono::duration_cast<chrono::milliseconds>(time2 - time1);
+    cout << "This operation took " << duration.count() << " milliseconds." << endl;
+    cout << endl;
+}
