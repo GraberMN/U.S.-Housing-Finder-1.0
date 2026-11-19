@@ -28,7 +28,6 @@ int HashMap::reduce(long long hashCode)
 void HashMap::resize()
 {
     numBuckets *= 2;
-    loadFactor = (double)(numEntries) / (double)(numBuckets);
     pair<string, Listing>* tempHashTable = hashTable;
     hashTable = new pair<string, Listing>[numBuckets];
     for (int i = 0; i < numBuckets; i++)
@@ -91,7 +90,7 @@ void HashMap::insert(Listing& listing)
     else
     {
         int firstOpenIndex = linearProbing(index);
-        hashTable[index].first = listing.id;
+        hashTable[firstOpenIndex].first = listing.id;
 
         hashTable[firstOpenIndex].second.id = listing.id;
         hashTable[firstOpenIndex].second.url = listing.url;
@@ -108,3 +107,56 @@ void HashMap::insert(Listing& listing)
         resize();
 }
 
+// Reads in all 380,000+ listings from dataset into the HashMap
+void HashMap::readInData()
+{
+    auto time1 = chrono::high_resolution_clock::now();
+
+    ifstream inFS;
+    inFS.open("../data/housing.csv");
+    if (!inFS.is_open())
+        cout << "Failed to open file." << endl;
+    string token;
+    string line;
+    getline(inFS, line);
+
+    string id;
+    string url;
+    int monthlyRent;
+    string type;
+    int sqfeet;
+    int beds;
+    double baths;
+    string state;
+    while (getline(inFS, line))
+    {
+        istringstream inSS(line);
+        getline(inSS, id, ',');
+        getline(inSS, url, ',');
+        getline(inSS, token, ',');
+        try
+        {
+            monthlyRent = stoi(token);
+        }
+        catch (...)
+        {
+            // Deals with abnormally high monthly rents
+            monthlyRent = INT_MAX;
+        }
+        getline(inSS, type, ',');
+        getline(inSS, token, ',');
+        sqfeet = stoi(token);
+        getline(inSS, token, ',');
+        beds = stoi(token);
+        getline(inSS, token, ',');
+        baths = stod(token);
+        getline(inSS, state, ',');
+        Listing listing(id, url, monthlyRent, type, sqfeet, beds, baths, state);
+        insert(listing);
+    }
+    cout << numEntries << " listings read into the HashMap." << endl;
+
+    auto time2 = chrono::high_resolution_clock::now();
+    auto duration = chrono::duration_cast<chrono::milliseconds>(time2 - time1);
+    cout << "This operation took " << duration.count() << " milliseconds." << endl;
+}
