@@ -313,3 +313,35 @@ void HashMap::searchByNumBaths(double baths)
     cout << endl;
 }
 
+// Finds and prints out only the Listings in a given state
+void HashMap::searchByState(string& state)
+{
+    auto time1 = chrono::high_resolution_clock::now();
+
+    string stateUppercase = state;
+    for (int i = 0; i < stateUppercase.length(); i++)
+        stateUppercase[i] = (char)(stateUppercase[i] - 32);
+    cout << "Listings in the state of " << stateUppercase << ":" << endl;
+    cout << endl;
+    int numFound = 0;
+    for (int i = 0; i < numBuckets; i++)
+    {
+        if (hashTable[i].first == "")
+            continue;
+        if (hashTable[i].second.state == state)
+        {
+            hashTable[i].second.print();
+            numFound++;
+        }
+    }
+    if (numFound == 1)
+        cout << numFound << " listing found." << endl;
+    else
+        cout << numFound << " listings found." << endl;
+
+    auto time2 = chrono::high_resolution_clock::now();
+    auto duration = chrono::duration_cast<chrono::milliseconds>(time2 - time1);
+    cout << "This operation took " << duration.count() << " milliseconds." << endl;
+    cout << endl;
+}
+
