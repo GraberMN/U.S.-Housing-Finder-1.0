@@ -345,3 +345,25 @@ void HashMap::searchByState(string& state)
     cout << endl;
 }
 
+// Prints all Listings in the HashMap
+void HashMap::printAll()
+{
+    auto time1 = chrono::high_resolution_clock::now();
+
+    cout << "All listings:" << endl;
+    cout << endl;
+    int numPrinted = 0;
+    for (int i = 0; i < numBuckets; i++)
+    {
+        if (hashTable[i].first == "")
+            continue;
+        hashTable[i].second.print();
+        numPrinted++;
+    }
+    cout << numPrinted << " listings printed." << endl;
+
+    auto time2 = chrono::high_resolution_clock::now();
+    auto duration = chrono::duration_cast<chrono::milliseconds>(time2 - time1);
+    cout << "This operation took " << duration.count() << " milliseconds." << endl;
+    cout << endl;
+}
