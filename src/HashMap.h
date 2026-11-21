@@ -7,8 +7,13 @@
 
 #include "Listing.h"
 #include <utility>
+#include <climits>
+#include <fstream>
+#include <sstream>
 #include <chrono>
 
+// Each key value pair in the HashMap consists of a unique key (listing ID) and a value (Listing object).
+// The HashMap has an initial bucket count of 5, has a max load factor of 0.8, and uses linear probing for collisions.
 class HashMap
 {
 private:
@@ -21,15 +26,15 @@ private:
     long long hashFunc(string& id);
     int reduce(long long hashCode);
     void resize();
-    void linearProbing(Listing& listing);
+    int linearProbing(int index);
 public:
     HashMap();
     ~HashMap();
     void insert(Listing& listing);
     void readInData();
-    void searchByMonthlyRent(int monthlyRent);
+    void searchByMonthlyRent(int monthlyRentLower, int monthlyRentUpper);
     void searchByType(string& type);
-    void searchBySqFeet(int sqfeet);
+    void searchBySqFeet(int sqfeetLower, int sqfeetUpper);
     void searchByNumBeds(int beds);
     void searchByNumBaths(double baths);
     void searchByState(string& state);
