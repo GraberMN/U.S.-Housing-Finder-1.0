@@ -1,23 +1,35 @@
 #ifndef U_S__HOUSING_FINDER_1_0_SET_H
 #define U_S__HOUSING_FINDER_1_0_SET_H
 #include "Listing.h"
-#include <set>
 #include <climits>
 #include <fstream>
 #include <sstream>
 #include <chrono>
+#include <functional>
 
-struct ListingCompare{
-    bool operator()(const Listing& a, const Listing& b) const{
-        return a.id < b.id;
-    }
-};
 
 class Set{
 private:
-    set<Listing, ListingCompare> listings;
+    struct Node{
+        Listing data;
+        Node* next;
+        Node(Listing& listing);
+    };
+    Node** buckets;
+    int numEntries;
+    int numBuckets;
+    double loadFactor;
+    const double maxLoadFactor = 1.0;
+
+    unsigned long long hashFunc(string& id);
+    int reduce(unsigned long long hashCode);
+    void resize();
+    void searchTable(const function<bool(Listing&)>& matches, int& numFound);
+    Set(const Set&);
+    Set& operator=(const Set&);
 public:
     Set();
+    ~Set();
     void insert(Listing& listing);
     void readInData();
     void searchByMonthlyRent(int monthlyRentLower, int monthlyRentUpper);
